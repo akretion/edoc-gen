@@ -51,6 +51,7 @@ generate() {
   local current_dir=$(pwd)
   rm -rf $gen_path/*.*
   plugin_hook prepare $SCHEMA_NAME $version
+  mkdir -p "schemas/$SCHEMA_NAME/$version"
   cd "schemas/$SCHEMA_NAME/$version"
   for f in *.xsd;
   do
@@ -72,5 +73,7 @@ generate() {
   plugin_hook finish
 }
 
-
+prepare_schemas "$VERSION" "$ZIP_URL"
 generate "$VERSION"
+# TODO make a flag to enable docs generation:
+# cd docs && make html && cd ..
