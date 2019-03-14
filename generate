@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# Copyright (C) 2018 - TODAY Raphael Valyi - Akretion
+# MIT-LICENSE
+set -eo pipefail
+
+SCHEMA_NAME=$1
+PLUGIN=$2
+VERSION=$3
+ZIP_URL=$4
+FILE_FILTER=$5
+export GENERATEDS_HOME=${GENERATEDS_HOME:="/home/rvalyi/DEV/generateds"}
+export ROOT_DIR=$(pwd)
+
+
+plugin_hook() {
+  local cmd=$1
+  shift
+  [ -f  "$ROOT_DIR"/scripts/gen_$PLUGIN/"$cmd" ] && "$ROOT_DIR"/scripts/gen_$PLUGIN/"$cmd" $@ || echo ""
+}
+
+
+prepare_schemas() {
+  local version=$1
+  local schemas_url=$2
+  local lib_name="$SCHEMA_NAME"lib
+  local gen_path="$SCHEMA_NAME"lib/"$version"
+  # download schemas unless already manually put inside /tmp/schemas.zip
+#  [ ! -f /tmp/schemas.zip ] && wget -qO /tmp/schemas.zip --no-check-certificate "$schemas_url"
+  [ ! -f /tmp/schemas.zip ] && curl $schemas_url -k -L -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/66.0.3359.181 Chrome/66.0.3359.181 Safari/537.36' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: en-US,en;q=0.9' --compressed --output - > /tmp/schemas.zip
+  rm -rf schemas/$SCHEMA_NAME
+  unzip -o /tmp/schemas.zip -d schemas/$SCHEMA_NAME
+  rm -f /tmp/schemas.zip
+  unzip_path=$(ls schemas/$SCHEMA_NAME | head -n1)
+  if [ -d schemas/"$SCHEMA_NAME/$unzip_path" ]; then  # unwrap nesting
+    mv schemas/"$SCHEMA_NAME/$unzip_path" "schemas/$SCHEMA_NAME/$version"
+  else  # edfreinf and nfse have no nesting for instance
+    mkdir "schemas/$SCHEMA_NAME/$version"
+    mv schemas/"$SCHEMA_NAME"/*.* "schemas/$SCHEMA_NAME/$version"
+
+    # TODO move this into python/prepare plugin for nfse
+    mv schemas/"$SCHEMA_NAME/$version"/nfse*.txt schemas/"$SCHEMA_NAME/$version"/nfse.xsd
+    sed -i 's/ xsd:/<xsd:/' schemas/"$SCHEMA_NAME/$version"/nfse.xsd # FIXES schema typo
+  fi
+}
+
+
+generate() {
+  local version=$1
+  local lib_name="$SCHEMA_NAME"lib
+  local gen_path="$SCHEMA_NAME"lib/"$version"
+  local current_dir=$(pwd)
+  rm -rf $gen_path/*.*
+  plugin_hook prepare $SCHEMA_NAME $version
+  cd "schemas/$SCHEMA_NAME/$version"
+  for f in *.xsd;
+  do
+    local name=$(echo "$f" | sed 's/\.xsd//g' | sed 's/\./_/g' | sed "s/_$version//g")
+    local module_name=$(echo $name | tr "/" "\n" | tail -n1 | tr "-" "\n" | head -n1)
+    if [[ $FILE_FILTER != "" ]]; then
+      keep=$([[ "$module_name" =~ ^($FILE_FILTER)$ ]] && echo true || echo false)
+    else
+      keep=true
+    fi
+    if [[ ! $module_name =~ ^tipos.*$ ]] && [[ ! $module_name =~ ^xmldsig.*$ ]] && [ "$keep" = true ] ; then
+      echo "Processing file $f ...";
+      plugin_hook generate_file $SCHEMA_NAME $version $module_name "$f"
+    fi
+  done
+
+  cd "$current_dir"
+
+  plugin_hook finish
+}
+
+
+generate "$VERSION"
