@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+prepare() {
+  local schema_name=$1
+  local version=$2
+  local lib_name="$schema_name"lib
+  local gen_path="$schema_name"lib/"$version"
+  local module_contents=$(cat  <<EOF
+Module contents
+=================
+
+EOF
+)
+
+  mkdir -p docs
+  echo "$module_contents" > docs/module_contents.txt
+  echo "sys.path.append(os.path.abspath('../$gen_path'))" >> docs/conf.py
+
+  rm -rf $gen_path
+  mkdir -p $gen_path
+  touch "$lib_name"/__init__.py
+  touch "$gen_path"/__init__.py
+}
+
+prepare $@

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+generate_file() {
+  local schema_name=$1
+  local version=$2
+  local module_name=$3
+  local file=$4
+  local gen_path="$ROOT_DIR/$schema_name"lib/"$version"
+  echo python "$GENERATEDS_HOME"/generateDS.py --no-namespace-defs --use-getter-setter=none -f -o "$gen_path/$module_name".py $file
+
+  # we use the no-collect option of the process_includes preprocessor to avoid the inclusion of
+  # XML signature classes to keep our lib small. We are generally not interrested in importing signatures
+  # and the signature of exported XML is typically done externally with tools such as signxml
+  python "$GENERATEDS_HOME"/process_includes.py --no-collect-includes "$file" | \
+  python "$GENERATEDS_HOME"/generateDS.py --no-namespace-defs --use-getter-setter=none -f -o "$gen_path/$module_name".py -
+  # you can typically debug the XML pre-processing by enabling to dump the preprocessor result into a temporary file:
+  # python3 "$GENERATEDS_HOME"/process_includes.py --no-collect-includes "$file" > /tmp/debug_$module_name.xml  # TODO remove!
+
+  if [[ -d "$ROOT_DIR"/src/"$schema_name" ]]; then
+    cp "$ROOT_DIR"/src/"$schema_name"/*.* "$gen_path"/
+  fi
+  # TODO, possibly generate other files without includes (impossible import but export OK)
+  # python "$GENERATEDS_HOME"/generateDS.py --no-collect-includes -f -o "$gen_path/$module_name".py "$file"
+
+#  autopep8 --in-place -p3 "$gen_path/$module_name".py
+  module_contents_part=$(cat  <<EOF
+.. automodule:: $module_name
+    :members:
+    :undoc-members:
+    :show-inheritance:
+EOF
+)
+  echo "$module_contents_part" >> $ROOT_DIR/docs/module_contents.txt
+}
+
+generate_file $@
