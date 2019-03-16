@@ -27,10 +27,11 @@ plugin_hook() {
 fetch_remote_plugin_cmd() {
   local plugin=$1
   local cmd=$2
-  local cmd_file="~/.edoc-gen/cache/scripts/$plugin/$cmd"
-  mkdir -p ~/.edoc-gen/cache/scripts/"$plugin"
+  local plugin_dir=~/.edoc-gen/cache/scripts/"$plugin"
+  local cmd_file="$plugin_dir/$cmd"
+  mkdir -p $plugin_dir
   if [[ ! -f  "$cmd_file" ]]; then
-    echo "fetching default repo plugin $plugin/$cmd command and caching it locally in $cmd_file"
+    echo "fetching default repo plugin $plugin/$cmd command and caching it locally in $plugin_dir"
     echo "curl -s https://raw.githubusercontent.com/akretion/edoc-gen/master/scripts/$plugin/$cmd" -o "$cmd_file"
     curl -s https://raw.githubusercontent.com/akretion/edoc-gen/master/scripts/"$plugin"/"$cmd" -o "$cmd_file"
   fi
