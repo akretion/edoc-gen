@@ -16,14 +16,17 @@ plugin_hook() {
   local cmd=$1
   local cmd_file
   shift
+  echo ""
   if [[ -f  "$ROOT_DIR"/scripts/$SCHEMA_NAME/$PLUGIN/"$cmd" ]]; then
     cmd_file="$ROOT_DIR"/scripts/$SCHEMA_NAME/$PLUGIN/"$cmd"
-    echo -e "\nrunning specific plugin command:\n$cmd_file | bash -s $@ || echo ''"
+    echo "running specific plugin command:"
   else
     cmd_file=~/.edoc-gen/cache/scripts/"$PLUGIN"/"$cmd"
     fetch_remote_plugin_cmd $PLUGIN $cmd
-    echo -e "\nrunning generic plugin command:\n$cmd_file | bash -s $@ || echo ''"
+    echo "running generic plugin command:"
+    echo "(you can override it with a local scripts/$SCHEMA_NAME/$PLUGIN/$cmd file)"
   fi
+  echo "$cmd_file | bash -s $@ || echo ''"
   cat $cmd_file | bash -s $@ || echo ""
 }
 
@@ -80,7 +83,8 @@ generate() {
       keep=true
     fi
     if [[ ! $module_name =~ ^tipos.*$ ]] && [[ ! $module_name =~ ^xmldsig.*$ ]] && [ "$keep" = true ] ; then
-      echo -e "\nprocessing file $f ...";
+      echo ""
+      echo "processing file $f ...";
       plugin_hook generate_file $SCHEMA_NAME $version $module_name "$f"
     fi
   done
