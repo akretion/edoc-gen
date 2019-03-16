@@ -13,6 +13,5 @@ generate_file() {
   local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
   python "$ODOO_GEN_HOME"/gends_run_gen_odoo.py -f -p "$GENERATEDS_HOME/generateDS.py" -l "$schema_name" -x "$version" -d "$output_dir" -v $file
   #autopep8 --in-place -p3 models.py
-  local odoo_filename=$(echo $file  | tr '_' '\n' | head -n1 )
-  echo "from . import $odoo_filename" >> "$output_dir"/__init__.py
+  echo "from . import $module_name" >> "$output_dir"/__init__.py
 }
