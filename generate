@@ -91,7 +91,7 @@ generate() {
 
   cd "$current_dir"
 
-  plugin_hook finish
+  plugin_hook finish $SCHEMA_NAME $version
 }
 
 prepare_schemas "$VERSION" "$ZIP_URL"
