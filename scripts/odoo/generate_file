@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-#export ODOO_GEN_HOME="$GENERATEDS_HOME"/odoo # TODO only if not defined
 export ODOO_GEN_HOME=~/DEV/generateds/odoo  # TODO only if not defined
-
 
 generate_file() {
   local schema_name=$1
@@ -15,3 +13,5 @@ generate_file() {
   #autopep8 --in-place -p3 models.py
   echo "from . import $module_name" >> "$output_dir"/__init__.py
 }
+
+generate_file $@
