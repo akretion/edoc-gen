@@ -7,9 +7,8 @@ prepare() {
   local security_dir="$ROOT_DIR/l10n_br_spec_$schema_name/security/$version"
   rm -rf $output_dir
   mkdir -p $output_dir
+  touch $output_dir/__init__.py
   rm -rf $security_dir
   mkdir -p $security_dir
   echo "id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink" > "$security_dir"/ir.model.access.csv
 }
-
-prepare $@
