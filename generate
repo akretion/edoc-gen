@@ -14,15 +14,17 @@ export ROOT_DIR=$(pwd)
 
 plugin_hook() {
   local cmd=$1
+  local cmd_file
   shift
   if [[ -f  "$ROOT_DIR"/scripts/$SCHEMA_NAME/$PLUGIN/"$cmd" ]]; then
-    "$ROOT_DIR"/scripts/$SCHEMA_NAME/$PLUGIN/"$cmd" $@ || echo ""
+    cmd_file="$ROOT_DIR"/scripts/$SCHEMA_NAME/$PLUGIN/"$cmd"
+    echo "running specific plugin command:\n$cmd_file | bash -s $@ || echo ''"
   else
-    local cmd_file=~/.edoc-gen/cache/scripts/"$PLUGIN"/"$cmd"
+    cmd_file=~/.edoc-gen/cache/scripts/"$PLUGIN"/"$cmd"
     fetch_remote_plugin_cmd $PLUGIN $cmd
-    echo "running $cmd_file | bash -s $@ || echo ''"
-    cat $cmd_file | bash -s $@ || echo ""
+    echo "running generic plugin command:\n$cmd_file | bash -s $@ || echo ''"
   fi
+  cat $cmd_file | bash -s $@ || echo ""
 }
 
 fetch_remote_plugin_cmd() {
