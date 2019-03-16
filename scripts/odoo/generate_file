@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+#export ODOO_GEN_HOME="$GENERATEDS_HOME"/odoo # TODO only if not defined
+export ODOO_GEN_HOME=~/DEV/generateds/odoo  # TODO only if not defined
+
+
+generate_file() {
+  local schema_name=$1
+  local version=$2
+  local module_name=$3
+  local file=$4
+  local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
+  python "$ODOO_GEN_HOME"/gends_run_gen_odoo.py -f -p "$GENERATEDS_HOME/generateDS.py" -l "$schema_name" -x "$version" -d "$output_dir" -v $file
+  #autopep8 --in-place -p3 models.py
+#  rm "$module_name"_"$version"lib.py
+}
+
+generate_file $@

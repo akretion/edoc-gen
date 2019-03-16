@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+prepare() {
+  local schema_name=$1
+  local version=$2
+  local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
+  local security_dir="$ROOT_DIR/l10n_br_spec_$schema_name/security/$version"
+  rm -rf $output_dir
+  mkdir -p $output_dir
+  rm -rf $security_dir
+  mkdir -p $security_dir
+  echo "id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink" > "$security_dir"/ir.model.access.csv
+}
+
+prepare $@

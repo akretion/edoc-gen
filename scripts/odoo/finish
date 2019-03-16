@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+finish() {
+  local schema_name=$1
+  local version=$2
+  local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
+  rm "$output_dir"/*lib.py
+  rm -rf "$output_dir"/__pycache__
+  rm "$output_dir"/generateds_definedsimpletypes.py
+}
+
+finish $@
