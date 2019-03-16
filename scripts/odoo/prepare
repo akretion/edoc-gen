@@ -5,9 +5,60 @@ prepare() {
   local version=$2
   local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
   local security_dir="$ROOT_DIR/l10n_br_spec_$schema_name/security/$version"
+  local import_models_file="$ROOT_DIR"/l10n_br_spec_"$schema_name"/__init__.py
+  local import_version_file="$ROOT_DIR"/l10n_br_spec_"$schema_name"/models/__init__.py
+  local spec_models_file="$ROOT_DIR"/l10n_br_spec_"$schema_name"/models/spec_models.py
+  local manifest_file="$ROOT_DIR"/l10n_br_spec_"$schema_name"/__manifest__.py
+
+  local manifest=$(cat  <<EOF
+# -*- coding: utf-8 -*-
+{
+    'name' : '$schema_name spec',
+    'version' : '0.1',
+    'sequence': 42,
+    'category': 'Accounting',
+    'summary' : '$chema_name spec',
+    'description' : "$schema_name spec",
+    'depends': ['base'],
+    'data': ['security/$version/ir.model.access.csv'],
+    'installable': True,
+    'application': False,
+}
+EOF
+)
+
+  local spec_models=$(cat << EOF
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields
+
+
+class AbstractSpecMixin(models.AbstractModel):
+    _description = "Abstract Model"
+    _stack_path = ""
+    _name = 'abstract.spec.mixin'
+
+    # TODO copy from KMEE ./l10n_br_base/models/sped_base.py, check
+    currency_id = fields.Many2one(
+        comodel_name='res.currency',
+        string='Moeda',
+        compute='_compute_currency_id',
+        default=lambda self: self.env.ref('base.BRL').id,
+    )
+
+    def _compute_currency_id(self):
+        for item in self:
+            item.currency_id = self.env.ref('base.BRL').id
+EOF
+)
+
   rm -rf $output_dir
   mkdir -p $output_dir
   touch $output_dir/__init__.py
+  [[ ! -f $import_models_file ]] && echo "from . import models" > "$import_models_file"
+  [[ ! -f $import_version_file ]] && echo "from . import $version" > "$import_version_file"
+  [[ ! -f $manifest_file ]] && echo "$manifest" > "$manifest_file"
+  [[ ! -f $spec_models_file ]] && echo "$spec_models" > "$spec_models_file"
   rm -rf $security_dir
   mkdir -p $security_dir
   echo "id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink" > "$security_dir"/ir.model.access.csv
