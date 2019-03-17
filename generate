@@ -71,6 +71,7 @@ generate() {
   local current_dir=$(pwd)
   rm -rf $gen_path/*.*
   plugin_hook prepare $SCHEMA_NAME $version
+  plugin_hook after_prepare $SCHEMA_NAME $version
   mkdir -p "schemas/$SCHEMA_NAME/$version"
   cd "schemas/$SCHEMA_NAME/$version"
   for f in *.xsd;
