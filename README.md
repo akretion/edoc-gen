@@ -1,8 +1,26 @@
-# edoc-gen
+# about edoc-gen
 
 This is a helper script for generating Python and Odoo ERP libraries for the Brazilian electronic fiscal documents using http://www.davekuhlman.org/generateDS.html. It supports all fiscal documents that have XSD schemas, that is: NF-e, CC-e, NFS-e, MDF-e, CT-e, EFD-Reinf, e-Social, GNRE, BP-e...
 
-For all these fiscal documents the schemas are inside a zip arcchive that can be downloaded from an official URL. After normalizing the xsd file names, we launch the generateDS.py generator on them. But we want to keep our libraries small, so gen-ds enables to specify that only some xsd files should support both export and import.
+For all these fiscal documents the schemas are inside a zip archive that can be downloaded from an official URL. After normalizing the xsd file names, we launch the generateDS.py generator on them. But we want to keep our libraries small, so edoc-gen enables to specify that only some xsd files should support both export and import.
+
+# usage
+
+Install generateDS somewhere https://www.davekuhlman.org/generateDS.html#how-to-build-and-install-it
+
+Then export its home directory for the script to know where to find it:
+```
+export GENERATEDS_HOME=path_to_generateds
+```
+
+Optionnally, if you want to generate Odoo models mixins, you need the Akretion plugin for Odoo. It is available in the generateDS pull request for now: https://bitbucket.org/dkuhlman/generateds/pull-requests/51/d7e954682a90/diff .
+
+Either merge the branch, either export an environment variable to the odoo plugin directory with:
+```
+export ODOO_GEN_HOM=path_to_odoo plugin dir
+TODO!!! Too bad it is still hard coded here https://github.com/akretion/edoc-gen/blob/master/scripts/odoo/generate_file
+I will fix it soon
+```
 
 The script is meant to be run inline from curl so the maintenance can be centralized here without the need to bother packaging the bash scripts. The API is:
 
@@ -12,7 +30,7 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 'files'
 
   were the arguments mean:
-- schema_name: name of tthe schame, can be nfe, nfse, cce, mdfe...
+- schema_name: name of the schame, can be nfe, nfse, cce, mdfe...
 - plugin_name: python|odoo (Akretion made an Odoo plugin for GenarateDS, similar to the Django plugin)
 - version: example v4_00
 - schema_url: URL of the zip archive containing the schemas
