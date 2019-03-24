@@ -55,7 +55,7 @@ https://github.com/akretion/ndfelib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s mdfe python v3_00 \
 'https://dfe-portal.sefazvirtual.rs.gov.br/MDFE/DownloadArquivoEstatico/?sistema=MDFE&tipoArquivo=2&nomeArquivo=PL_MDFe_300_NT022018_v1.02.zip' \
-mdfe
+'mdfe|mdfeModalAereo|mdfeModalAquaviario|mdfeModalFerroviario|mdfeModalRodoviario'
 ```
 
 # CT-e
@@ -63,7 +63,7 @@ https://github.com/akretion/ctelib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s cte python v3_00 \
 'http://www.cte.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=xuFsi7DbwBk=' \
-cte
+'cte|cteModalAereo|cteModalAquaviario|cteModalDutoviario|cteModalFerroviario|cteModalRodoviarioOS|cteModalRodoviario|cteMultiModal'
 ```
 
 # EFD-Reinf
