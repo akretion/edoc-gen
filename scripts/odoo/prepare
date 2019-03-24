@@ -11,14 +11,13 @@ prepare() {
   local manifest_file="$ROOT_DIR"/l10n_br_spec_"$schema_name"/__manifest__.py
 
   local manifest=$(cat  <<EOF
-# -*- coding: utf-8 -*-
 {
-    'name' : '$schema_name spec',
-    'version' : '0.1',
-    'sequence': 42,
+    'name': '$schema_name spec',
+    'version': '12.0.1.0.0',
+    'author': 'Akretion, Odoo Community Association (OCA)',
+    'license': 'LGPL-3',
     'category': 'Accounting',
-    'summary' : '$chema_name spec',
-    'description' : "$schema_name spec",
+    'summary': '$chema_name spec',
     'depends': ['base'],
     'data': ['security/$version/ir.model.access.csv'],
     'installable': True,
@@ -28,8 +27,6 @@ EOF
 )
 
   local spec_models=$(cat << EOF
-# -*- coding: utf-8 -*-
-
 from odoo import models, fields
 
 
@@ -38,7 +35,6 @@ class AbstractSpecMixin(models.AbstractModel):
     _stack_path = ""
     _name = 'abstract.spec.mixin'
 
-    # TODO copy from KMEE ./l10n_br_base/models/sped_base.py, check
     currency_id = fields.Many2one(
         comodel_name='res.currency',
         string='Moeda',
