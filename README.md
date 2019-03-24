@@ -24,25 +24,62 @@ The script has a modular structure were you can override your own scripts in scr
 * a plugin for a Python library (marshall and unmarshall XML docs according to the provided XSD)
 * a plugin for the Odoo open source ERP that generates Odoo mixins to be injected later properly into Odoo models
 
-For each kind of these Brazilian electronic fiscal documents you can find here the generated lib maintained by Akretion and also the basic command that has been used to generate the Python lib. These scripts are only here to demonstrate how it works (you can run them in an empty directory), but the real Python libraries have additional README.rst, tests and limited overrides maintained manually in their respective repo.
+For each kind of these Brazilian electronic fiscal documents you can find here the generated lib maintained by Akretion and also the basic command that has been used to generate the Python lib. These scripts are only here to demonstrate how it works (you can run them in an empty directory), but the real Python libraries have additional README.rst, tests and limited overrides maintained manually in their respective repo. We also don't generate Python classes (1000 lines minimum) for very small 20 lines schemas such as communication events as these can be easily dealt with simple Python strings or Jinja2.
 
-# NF-e
-https://github.com/akretion/nfelib
+# NF-e | Nota Fiscal eletrônica
+
+
+| Python  | https://github.com/akretion/nfelib           |
+|---------|----------------------------------------------|
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/658  |
+
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s nfe python v4_00 \
 'http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=CoNA9VIgZ3E=' \
 'leiauteNFe|leiauteInutNFe'
 ```
 
-# CC-e
-https://github.com/akretion/ccelib
+# CC-e | Carta de Correção Eletrônica
+
+
+| Python  | https://github.com/akretion/ccelib           |
+|---------|----------------------------------------------|
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/659  |
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s cce python v1_00 \
 'http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=P/FXaGiLKo0=' \
 leiauteCCe
 ```
 
-# NFS-e (ABRASF)
+# MDF-e | Manifestação do Destinatário Eletrônica
+
+
+| Python  | https://github.com/akretion/ndfelib          |
+|---------|----------------------------------------------|
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/660  |
+
+```
+curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s mdfe python v3_00 \
+'https://dfe-portal.sefazvirtual.rs.gov.br/MDFE/DownloadArquivoEstatico/?sistema=MDFE&tipoArquivo=2&nomeArquivo=PL_MDFe_300_NT022018_v1.02.zip' \
+'mdfe|mdfeModalAereo|mdfeModalAquaviario|mdfeModalFerroviario|mdfeModalRodoviario'
+```
+
+# CT-e | Conhecimento de Transporte Eletrônico
+
+
+| Python  | https://github.com/akretion/ctelib           |
+|---------|----------------------------------------------|
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/661  |
+
+```
+curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s cte python v3_00 \
+'http://www.cte.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=xuFsi7DbwBk=' \
+'cte|cteModalAereo|cteModalAquaviario|cteModalDutoviario|cteModalFerroviario|cteModalRodoviarioOS|cteModalRodoviario|cteMultiModal'
+```
+
+# NFS-e | Nota Fiscal de Serviço padrão nacional ABRASF
 https://github.com/akretion/nfselib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s nfse python v2_03 \
@@ -50,44 +87,28 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 nfse
 ```
 
-# MDF-e,
-https://github.com/akretion/ndfelib
-```
-curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s mdfe python v3_00 \
-'https://dfe-portal.sefazvirtual.rs.gov.br/MDFE/DownloadArquivoEstatico/?sistema=MDFE&tipoArquivo=2&nomeArquivo=PL_MDFe_300_NT022018_v1.02.zip' \
-'mdfe|mdfeModalAereo|mdfeModalAquaviario|mdfeModalFerroviario|mdfeModalRodoviario'
-```
-
-# CT-e
-https://github.com/akretion/ctelib
-```
-curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s cte python v3_00 \
-'http://www.cte.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=xuFsi7DbwBk=' \
-'cte|cteModalAereo|cteModalAquaviario|cteModalDutoviario|cteModalFerroviario|cteModalRodoviarioOS|cteModalRodoviario|cteMultiModal'
-```
-
-# EFD-Reinf
+# EFD-Reinf | Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais
 https://github.com/akretion/efdlib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s efdreinf python v01_04 \
 'http://sped.rfb.gov.br/estatico/CA/E40B96DD94D4B54626EDDF0CC3004937AB1597/Pacote%20XSD%20Eventos%20EFD%20Reinf%20v1_04_00.zip'
 ```
 
-# e-Social
+# e-Social | Sistema de Escrituração Digital das Obrigações Fiscais, Previdenciárias e Trabalhistas
 https://github.com/akretion/esociallib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s esocial python v02_05 \
 'https://portal.esocial.gov.br/manuais/2019-01-29_esquemas_xsd_v02-05-00.zip'
 ```
 
-# GNRE
+# GNRE | Guia Nacional de Recolhimento de Tributos Estaduais
 https://github.com/akretion/gnrelib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s gnre python v1_00 \
 'http://www.gnre.pe.gov.br/gnre/portal/arquivos/EsquemaLote.zip'
 ```
 
-# BP-e
+# BP-e | Bilhete de Passagem Eletrônico
 https://github.com/akretion/bpelib
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s bpe python v1_00 \
