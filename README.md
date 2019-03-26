@@ -2,7 +2,10 @@
 
 This is a helper script for generating Python and Odoo ERP libraries for the Brazilian electronic fiscal documents using http://www.davekuhlman.org/generateDS.html. It supports all fiscal documents that have XSD schemas, that is: NF-e, CC-e, NFS-e, MDF-e, CT-e, EFD-Reinf, e-Social, GNRE, BP-e...
 
-For all these fiscal documents the schemas are inside a zip archive that can be downloaded from an official URL. After normalizing the xsd file names, we launch the generateDS.py generator on them. But we want to keep our libraries small, so edoc-gen enables to specify that only some xsd files should support both export and import.
+But why a helper instead of launching generateDS manually?
+- For all these fiscal documents there is a common pattern: the schemas are inside a zip archive that can be downloaded from an official URL.
+- After normalizing the xsd file names, we launch the generateDS.py generator on them. But we also want to keep our libraries small, so edoc-gen enables to specify that only some xsd files should support both export and import.
+- Finally automating all the steps with the proper settings allowed me to quickly re-generate the Python libraries for all the fiscal documents and run the pytests import/export tests on them to ensure any patch in generateDS would would retain real life compatibility (I got some 6 patches merged into generateDS). And mostly it allowed me to the do the same with the Odoo mixin generator plugin: quicky re-generate all Odoo modules and ensure they install and pass the tests. The libraries and Odoo modules are typically distributed as separated packages inside different repos that can get their own bug reports, forks and contributions but it also work to generate everything in the same directory for a quick extensive testing.
 
 # usage
 
