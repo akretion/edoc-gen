@@ -117,7 +117,7 @@ nfse
 
 | Python  | https://github.com/akretion/nfselib          |
 |---------|----------------------------------------------|
-| Odoo    | TODO                                         |
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/666  |
 
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s efdreinf python v01_04 \
