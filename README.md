@@ -128,7 +128,7 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 
 | Python  | https://github.com/akretion/esociallib       |
 |---------|----------------------------------------------|
-| Odoo    | TODO                                         |
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/665  |
 
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s esocial python v02_05 \
