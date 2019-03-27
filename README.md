@@ -143,7 +143,8 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s gnre python v1_00 \
-'http://www.gnre.pe.gov.br/gnre/portal/arquivos/EsquemaLote.zip'
+'http://www.gnre.pe.gov.br/gnre/portal/arquivos/EsquemaLote.zip' \
+lote_gnre
 ```
 
 # BP-e | Bilhete de Passagem Eletrônico
@@ -154,5 +155,6 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s bpe python v1_00 \
-'https://portal.fazenda.sp.gov.br/servicos/bpe/Documents/PL_BPe_100_NT022018.zip'
+'https://portal.fazenda.sp.gov.br/servicos/bpe/Documents/PL_BPe_100_NT022018.zip' \
+'bpe|eventoBPeTiposBasico'
 ```
