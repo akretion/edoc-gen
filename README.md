@@ -150,7 +150,7 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 
 | Python  | https://github.com/akretion/bpelib           |
 |---------|----------------------------------------------|
-| Odoo    | TODO                                         |
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/664  |
 
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s bpe python v1_00 \
