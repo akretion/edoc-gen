@@ -47,7 +47,7 @@ The script has a modular structure were you can override your own scripts in scr
 
 For each kind of these Brazilian electronic fiscal documents you can find here the generated lib maintained by Akretion and also the basic command that has been used to generate the Python lib. These scripts are only here to demonstrate how it works (you can run them in an empty directory), but the real Python libraries have additional README.rst, tests and limited overrides maintained manually in their respective repo. We also don't generate Python classes (1000 lines minimum) for very small 20 lines schemas such as communication events as these can be easily dealt with simple Python strings or Jinja2.
 
-# NF-e | Nota Fiscal eletrônica
+# NF-e | Nota Fiscal Eletrônica
 
 
 | Python  | https://github.com/akretion/nfelib           |
@@ -77,7 +77,7 @@ leiauteCCe
 # MDF-e | Manifestação do Destinatário Eletrônica
 
 
-| Python  | https://github.com/akretion/ndfelib          |
+| Python  | https://github.com/akretion/mdfelib          |
 |---------|----------------------------------------------|
 | Odoo    | https://github.com/OCA/l10n-brazil/pull/660  |
 
@@ -101,7 +101,11 @@ curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash 
 ```
 
 # NFS-e | Nota Fiscal de Serviço padrão nacional ABRASF
-https://github.com/akretion/nfselib
+
+| Python  | https://github.com/akretion/nfselib          |
+|---------|----------------------------------------------|
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/662  |
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s nfse python v2_03 \
 'http://www.abrasf.org.br/arquivos/publico/NFS-e/Versao_2.03/schema_xml_nfs-e_%20v2.03.zip' \
@@ -109,28 +113,45 @@ nfse
 ```
 
 # EFD-Reinf | Escrituração Fiscal Digital de Retenções e Outras Informações Fiscais
-https://github.com/akretion/efdlib
+
+
+| Python  | https://github.com/akretion/nfselib          |
+|---------|----------------------------------------------|
+| Odoo    | TODO                                         |
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s efdreinf python v01_04 \
 'http://sped.rfb.gov.br/estatico/CA/E40B96DD94D4B54626EDDF0CC3004937AB1597/Pacote%20XSD%20Eventos%20EFD%20Reinf%20v1_04_00.zip'
 ```
 
 # e-Social | Sistema de Escrituração Digital das Obrigações Fiscais, Previdenciárias e Trabalhistas
-https://github.com/akretion/esociallib
+
+| Python  | https://github.com/akretion/esociallib       |
+|---------|----------------------------------------------|
+| Odoo    | TODO                                         |
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s esocial python v02_05 \
 'https://portal.esocial.gov.br/manuais/2019-01-29_esquemas_xsd_v02-05-00.zip'
 ```
 
 # GNRE | Guia Nacional de Recolhimento de Tributos Estaduais
-https://github.com/akretion/gnrelib
+
+| Python  | https://github.com/akretion/gnrelib          |
+|---------|----------------------------------------------|
+| Odoo    | https://github.com/OCA/l10n-brazil/pull/663  |
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s gnre python v1_00 \
 'http://www.gnre.pe.gov.br/gnre/portal/arquivos/EsquemaLote.zip'
 ```
 
 # BP-e | Bilhete de Passagem Eletrônico
-https://github.com/akretion/bpelib
+
+| Python  | https://github.com/akretion/bpelib           |
+|---------|----------------------------------------------|
+| Odoo    | TODO                                         |
+
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s bpe python v1_00 \
 'https://portal.fazenda.sp.gov.br/servicos/bpe/Documents/PL_BPe_100_NT022018.zip'
