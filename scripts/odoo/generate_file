@@ -9,6 +9,10 @@ generate_file() {
   local module_name=$3
   local file=$4
   local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
+
+  # you can debug the XML preprocessing by commenting:
+  # python "$GENERATEDS_HOME"/process_includes.py "$file" > /tmp/debug_$module_name.xml
+
   python "$ODOO_GEN_HOME"/gends_run_gen_odoo.py -f -p "$GENERATEDS_HOME/generateDS.py" -l "$schema_name" -x "$version" -d "$output_dir" -v $file
   #autopep8 --in-place -p3 models.py
   echo "from . import $module_name" >> "$output_dir"/__init__.py
