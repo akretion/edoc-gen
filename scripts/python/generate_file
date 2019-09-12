@@ -6,6 +6,15 @@ generate_file() {
   local module_name=$3
   local file=$4
   local gen_path="$ROOT_DIR/$schema_name"lib/"$version"
+
+  if [[ ! -f "$GENERATEDS_HOME"/generateDS.py ]]; then
+    echo ""
+    echo "WARNING! You should download generateds in $GENERATEDS_HOME"
+    echo "If you have generateds installed elsewhere, instead before running the script do:"
+    echo "export GENERATEDS_HOME=<your_generateds_folder>"
+    echo ""
+  fi
+
   echo python "$GENERATEDS_HOME"/generateDS.py --no-namespace-defs --use-getter-setter=none -f -o "$gen_path/$module_name".py $file
 
   # we use the no-collect option of the process_includes preprocessor to avoid the inclusion of
