@@ -18,11 +18,9 @@ export GENERATEDS_HOME=path_to_generateds
 
 Optionnally, if you want to generate Odoo models mixins, you need the Akretion plugin for Odoo. It is available in the generateDS pull request for now: https://bitbucket.org/dkuhlman/generateds/pull-requests/51/d7e954682a90/diff .
 
-Either merge the branch, either export an environment variable to the odoo plugin directory with:
+Download this Odoo plugin branch and export the ODOO_GEN_HOM environment variable to the odoo plugin directory with (alternatively you can also merge the plugin branch):
 ```
-export ODOO_GEN_HOM=path_to_odoo plugin dir
-TODO!!! Too bad it is still hard coded here https://github.com/akretion/edoc-gen/blob/master/scripts/odoo/generate_file
-I will fix it soon
+export ODOO_GEN_HOM=path_to_odoo_plugin_dir
 ```
 
 The script is meant to be run inline from curl so the maintenance can be centralized here without the need to bother packaging the bash scripts. The API is:
