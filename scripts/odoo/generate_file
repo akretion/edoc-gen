@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-export ODOO_GEN_HOME=~/DEV/generateds/odoo  # TODO only if not defined
+export ODOO_GEN_HOME=${ODOO_GEN_HOME:="$GENERATEDS_HOME/odoo"}
 
 generate_file() {
   local schema_name=$1
@@ -10,6 +10,13 @@ generate_file() {
   local file=$4
   local output_dir="$ROOT_DIR/l10n_br_spec_$schema_name/models/$version"
 
+  if [[ ! -f "$ODOO_GEN_HOME"/gends_run_gen_odoo.py ]]; then
+    echo ""
+    echo "WARNING! You should download the Odoo generateds plugin in $ODOO_GEN_HOME"
+    echo "If you have the plugin installed elsewhere, instead before running the script do:"
+    echo "export ODOO_GEN_HOME=<your_generateds_odoo_plugin_folder>"
+    echo ""
+  fi
   # you can debug the XML preprocessing by commenting:
   # python "$GENERATEDS_HOME"/process_includes.py "$file" > /tmp/debug_$module_name.xml
 
