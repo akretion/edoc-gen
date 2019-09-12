@@ -8,7 +8,7 @@ PLUGIN=$2
 VERSION=$3
 ZIP_URL=$4
 FILE_FILTER=$5
-export GENERATEDS_HOME=${GENERATEDS_HOME:="/home/rvalyi/DEV/generateds"}
+export GENERATEDS_HOME=${GENERATEDS_HOME:="~/generateds"}
 export ROOT_DIR=$(pwd)
 
 
