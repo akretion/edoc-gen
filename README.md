@@ -55,7 +55,7 @@ For each kind of these Brazilian electronic fiscal documents you can find here t
 
 ```
 curl https://raw.githubusercontent.com/akretion/edoc-gen/master/generate | bash -s nfe python v4_00 \
-'http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=CoNA9VIgZ3E=' \
+'http://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=vdxcmJ2AgTo=' \
 'leiauteNFe|leiauteInutNFe'
 ```
 
