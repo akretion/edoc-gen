@@ -15,7 +15,7 @@ EOF
 
   mkdir -p docs
   echo "$module_contents" > docs/module_contents.txt
-  echo "sys.path.append(os.path.abspath('../$gen_path'))" >> docs/conf.py
+  ! grep -q $gen_path docs/conf.py && echo "sys.path.append(os.path.abspath('../$gen_path'))" >> docs/conf.py
 
   rm -rf $gen_path
   mkdir -p $gen_path
