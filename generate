@@ -8,9 +8,18 @@ PLUGIN=$2
 VERSION=$3
 ZIP_URL=$4
 FILE_FILTER=$5
-export GENERATEDS_HOME=${GENERATEDS_HOME:="~/generateds"}
 export ROOT_DIR=$(pwd)
 
+if [[ -z $GENERATEDS_HOME ]]; then
+  gends_bin=$(which generateDS.py)
+  if [[ -z $gends_bin ]]; then
+    echo "WARNING! You should install generateDS!"
+    echo "Or alternatively you should inform where it is located with:"
+    echo "export GENERATEDS_HOME=<your_generateds_folder>"
+    exit 1
+  fi
+  export GENERATEDS_HOME=$(dirname $gends_bin)
+fi
 
 plugin_hook() {
   local cmd=$1
